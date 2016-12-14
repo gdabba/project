@@ -30,7 +30,7 @@ main(){
 		resetMap();
 		if(MSC == 11){
 			attron(COLOR_PAIR(3));
-			mvaddstr(10,30,"상대 차례   ");
+			mvaddstr(10,30,"opponet turn   ");
 			attron(COLOR_PAIR(1));
 			refresh();
 			receiveXY(&ex, &ey, socket);	
@@ -45,7 +45,7 @@ main(){
 			x=14;y=7;
 			attron(COLOR_PAIR(3));
 			clearbottom();
-			mvaddstr(10,30,"내 차례   ");
+			mvaddstr(10,30,"my turn        ");
 			attron(COLOR_PAIR(1));
 			print(x,y,MSC);//set game
 			while(q2){ //put stone
@@ -95,7 +95,7 @@ main(){
 					key = put(x,y,MSC);
 					if(!key){
 						attron(COLOR_PAIR(3));
-						mvaddstr(15,0,"해당 위치에 이미 돌이 존재합니다.");
+						mvaddstr(15,0,"you cannot put the stone .       ");
 						attron(COLOR_PAIR(1));
 						move(y,x);
 						break;
@@ -108,7 +108,7 @@ main(){
 					sendXY(x,y,socket);
 					if(key == 2){
 						attron(COLOR_PAIR(3));
-						mvaddstr(15,0,"이겼습니다.                         ");
+						mvaddstr(15,0,"You Win.                         ");
 						attron(COLOR_PAIR(1));
 						win++;
 						print_stat();
@@ -116,21 +116,21 @@ main(){
 					} //win
 					else if(key == 6){
 						attron(COLOR_PAIR(3));
-						mvaddstr(15,0,"비겼습니다.                          ");
+						mvaddstr(15,0,"Draw.                            ");
 						attron(COLOR_PAIR(1));
 						q = 0;
 					} //draw
 					refresh();
 					if(!q){
 						attron(COLOR_PAIR(3));
-						mvaddstr(16,0,"더 하시겠습니까?(Y/N)                     ");
+						mvaddstr(16,0,"Play again?(Y/N)                 ");
 						refresh();
 						while(q3){
 							key = getch();
 							switch(key){
 							case 'Y':case 'y':
 								sendXY(1,1,socket);
-								mvaddstr(15,0,"상대의 응답을 기다리는중            ");
+								mvaddstr(15,0,"wait a game.                     ");
 								refresh();
 								receiveXY(&x,&y,socket);
 								if(x&&y){
@@ -142,7 +142,7 @@ main(){
 								else if(S){
 									close(socket);
 									clear();
-									mvaddstr(0,0,"새로운 상대를 기다리는중.          ");
+									mvaddstr(0,0,"Waiting gamer                    ");
 									win = 0; lose = 0;
 									refresh();
 									socket = acceptt();
@@ -151,8 +151,8 @@ main(){
 								}
 								else{
 									clear();
-									mvaddstr(0,0,"상대가 나갔습니다.                ");
-									mvaddstr(1,0,"아무키나 누르십시오.             ");
+									mvaddstr(0,0,"opponent logout                  ");
+									mvaddstr(1,0,"push any key                     ");
 									refresh();
 									getch();
 									clear();
@@ -177,7 +177,7 @@ main(){
 					}
 					//enemy turn
 					attron(COLOR_PAIR(3));
-					mvaddstr(10,30,"상대 차례   ");
+					mvaddstr(10,30,"opponet tur   n");
 					clearbottom();
 					attron(COLOR_PAIR(1));
 					refresh();
@@ -187,14 +187,14 @@ main(){
 					print(ex,ey, map_mirror[ey][ex]);
 					if(key == 6){
 						attron(COLOR_PAIR(3));
-						mvaddstr(15,0,"비겼습니다.                     ");
+						mvaddstr(15,0,"Draw.                            ");
 						attron(COLOR_PAIR(1));
 						print_stat();
 						q = 0;
 					} //draw
 					else if(key == 2){
 						attron(COLOR_PAIR(3));
-						mvaddstr(15,0,"졌습니다.                           ");
+						mvaddstr(15,0,"you lose.                        ");
 						attron(COLOR_PAIR(1));
 						lose++;
 						print_stat();
@@ -203,14 +203,14 @@ main(){
 					refresh();
 					if(!q){
 						attron(COLOR_PAIR(3));
-						mvaddstr(16,0,"더 하시겠습니까?(Y/N)                     ");
+						mvaddstr(16,0,"play agane?(Y/N)                     ");
 						refresh();
 						while(q3){
 							key = getch();
 							switch(key){
 							case 'Y':case 'y':
 								sendXY(1,1,socket);
-								mvaddstr(15,0,"상대의 응답을 기다리는중         ");
+								mvaddstr(15,0,"waiting for reply                ");
 								refresh();
 								receiveXY(&x,&y,socket);
 								if(x&&y){
@@ -222,7 +222,7 @@ main(){
 								else if(S){
 									close(socket);
 									clear();
-									mvaddstr(0,0,"새로운 상대를 기다리는중.           ");
+									mvaddstr(0,0,"waiting for new challenger.      ");
 									refresh();
 									win = 0; lose = 0;
 									socket = acceptt();
@@ -230,8 +230,8 @@ main(){
 									q3 = 0;
 								}
 								else{
-									mvaddstr(0,0,"상대가 나갔습니다.              ");
-									mvaddstr(1,0,"아무키나 누르십시오.              ");
+									mvaddstr(0,0,"opponent quit                    ");
+									mvaddstr(1,0,"push any key.                    ");
 									refresh();
 									getch();
 									clear();
@@ -265,15 +265,15 @@ void printbottom(int a){
 	switch(a){
 	case 3:
 		attron(COLOR_PAIR(3));
-		mvaddstr(15,0,"장목 위치입니다.                           ");
+		mvaddstr(15,0,"you cannot put a sotne.(more than 66!!)   ");
 		break;
 	case 4:
 		attron(COLOR_PAIR(3));
-		mvaddstr(15,0,"33 위치입니다                             ");
+		mvaddstr(15,0,"you cannot put a stone(33!!)              ");
 		break;
 	case 5:
 		attron(COLOR_PAIR(3));
-		mvaddstr(15,0,"44 위치입니다.                                ");
+		mvaddstr(15,0,"you cannot put a stone(44!!)              ");
 		break;
 	}
 }
@@ -309,34 +309,34 @@ void resetMap(){
 			move(i,j);
 			switch(map[i][j]){
 			case 0:
-				addstr("┌");
+				addstr("+");
 				break;
 			case 1:
-				addstr("─");
+				addstr("-");
 				break;
 			case 2:
-				addstr("┐");
+				addstr("+");
 				break;
 			case 3:
-				addstr("┬");
+				addstr("+");
 				break;
 			case 4:
-				addstr("┘");
+				addstr("+");
 				break;
 			case 5:
-				addstr("└");
+				addstr("+");
 				break;
 			case 6:
-				addstr("├");
+				addstr("+");
 				break;
 			case 7:
-				addstr("┤");
+				addstr("+");
 				break;
 			case 8:
-				addstr("┴");
+				addstr("+");
 				break;
 			case 9:
-				addstr("┼");
+				addstr("+");
 				break;
 			}
 		}
@@ -347,42 +347,42 @@ void print(int xx, int yy, char a){
 	move(yy,xx);
 	switch(a){
 	case 0:
-		addstr("┌");
+		addstr("+");
 		break;
 	case 1:
-		addstr("─");
+		addstr("+");
 		break;
 	case 2:
-		addstr("┐");
+		addstr("+");
 		break;
 	case 3:
-		addstr("┬");
+		addstr("+");
 		break;
 	case 4:
-		addstr("┘");
+		addstr("+");
 		break;
 	case 5:
-		addstr("└");
+		addstr("+");
 		break;
 	case 6:
-		addstr("├");
+		addstr("+");
 		break;
 	case 7:
-		addstr("┤");
+		addstr("+");
 		break;
 	case 8:
-		addstr("┴");
+		addstr("+");
 		break;
 	case 9:
-		addstr("┼");
+		addstr("+");
 		break;
 	case 10:
-		addstr("●");
+		addstr("O");
 		break;
 	case 11:
-		attron(COLOR_PAIR(2));
-		addstr("●");
-		attron(COLOR_PAIR(1));
+		//attron(COLOR_PAIR(2));
+		addstr("X");
+		//attron(COLOR_PAIR(1));
 		break;
 	}
 	refresh();
@@ -396,31 +396,31 @@ void print_stat(){
 				move(j+i,k+30);
 				switch(stat[j][k]){
 				case 0:
-					addstr("┌");
+					addstr("+");
 					break;
 				case 1:
-					addstr("─");
+					addstr("+");
 					break;
 				case 2:
-					addstr("┐");
+					addstr("+");
 					break;
 				case 4:
-					addstr("┘");
+					addstr("+");
 					break;
 				case 5:
-					addstr("└");
+					addstr("+");
 					break;
 				case 7:
-					addstr("│");
+					addstr("+");
 					break;
 				}
 			}
 		}
 	}
-	mvprintw(1,34,"나");
+	mvprintw(1,34,"   me   ");
 	mvprintw(2,31,"win :%2d", win);
 	mvprintw(3,31,"lose:%2d", lose);
-	mvprintw(6,31,"  상대");
+	mvprintw(6,31,"opponent");
 	mvprintw(7,31,"win :%2d", lose);
 	mvprintw(8,31,"lose:%2d", win);
 	attron(COLOR_PAIR(1));
@@ -714,8 +714,8 @@ int setSocket(){
 	char temp[10];
 	while(1){
 		clear();
-		mvaddstr(0,0,"1. 서버");
-		mvaddstr(1,0,"2. 클라이언트");
+		mvaddstr(0,0,"1. server");
+		mvaddstr(1,0,"2. client");
 		i = getch();
 		switch(i){
 		case '1':
@@ -726,10 +726,10 @@ int setSocket(){
 			getstr(temp);
 			port = atoi(temp);
 			clear();
-			mvaddstr(0,0,"상대를 기다리는 중");
+			mvaddstr(0,0,"wait challenger");
 			refresh();
 			if((q = open_server(port)) == -1){
-				mvaddstr(1,0,"서버를 열 수 없습니다.");
+				mvaddstr(1,0,"Dont open server.");
 			}
 			clear();
 			set_up();
@@ -752,8 +752,8 @@ int setSocket(){
 			port = atoi(temp);
 			if((q = connect_server(port, ipaddr)) == -1){
 				clear();
-				mvaddstr(0,0,"해당 서버에 접속 할 수 없습니다.");
-				mvaddstr(1,0,"서버의 정보를 확인해 주십시오.");
+				mvaddstr(0,0,"cannot access that server.    ");
+				mvaddstr(1,0,"please check the server info. ");
 				refresh();
 				getch();
 				noecho();
@@ -778,10 +778,10 @@ void start(){
 
 	while(q){
 		clear();
-		mvaddstr(4,39,"오목");
-		mvaddstr(12,35,"1. 시    작");
-		mvaddstr(13,35,"2. 게임방법");
-		mvaddstr(14,35,"3. 종    료");
+		mvaddstr(4,39,"OMOK");
+		mvaddstr(12,35,"1. S T A R T  ");
+		mvaddstr(13,35,"2. HOW To PLAY");
+		mvaddstr(14,35,"3. Q  U  I  T ");
 		refresh();
 		i = getch();
 		switch(i){
@@ -792,9 +792,9 @@ void start(){
 		case '2':
 			clear();
 			move(0,0);
-			printw("1. 5개의 돌을 연속해서 놓으면 승리합니다.\n");
-			printw("2. 흑돌인 경우 33, 44, 장목 위치에 돌을 놓을 수 없습니다.\n");
-			printw("3. 백돌인 경우 33, 44, 장목 위치에 돌을 놓을 수 있습니다.\n");
+			printw("1. To win you should put five stones in a row\n");
+			printw("2. If you are black stone, you cannot put 33, 44, more 66.\n");
+			printw("3. If you are white stone, you apply the same rule.       \n");
 			getch();
 			break;		
 		case '3':
